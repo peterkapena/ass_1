@@ -10,8 +10,53 @@ webgl.clearColor(0, 0, 0, 1);
 
 webgl.clear(webgl.COLOR_BUFFER_BIT);
 
-const values = [-0.25, -0.25, -.25, -0.125, -.125, -.25];
-const vertices = new Float32Array(values);
+const multiplySign = [
+  /***The first line of the cross */
+
+  //first triangle
+  -0.5, -0.5, -0.375, -0.25, -0.25, -0.375,
+
+  //second triangle
+  0.5, 0.5, 0.25, 0.375, 0.375, 0.25,
+
+  //third triangle
+  -0.25, -0.375, 0.25, 0.375, -0.375, -0.25,
+
+  //fourth triangle
+  -0.25, -0.375, 0.25, 0.375, 0.375, 0.25,
+
+  /***The second line of the cross */
+
+  //first triangle
+  -0.5, 0.5, -0.375, 0.25, -0.25, 0.375,
+
+  //second triangle
+  0.5, -0.5, 0.25, -0.375, 0.375, -0.25,
+
+  //third triangle
+  -0.25, 0.375, 0.375, -0.25, -0.375, 0.25,
+
+  //fourth triangle
+  0.25, -0.375, -0.375, 0.25, 0.375, -0.25,
+];
+
+const addSign = [
+  /***The first line of the cross */
+
+  //first triangle
+  0, 0.5, -0.125, 0.375, 0.125, 0.375,
+
+  //second triangle
+  0, -0.125, -0.125, -0.375, 0.125, -0.375,
+
+  //   //third triangle
+  -0.125, -0.375, 0.125, -0.375, 0.125, 0.375,
+
+  //   //fourth triangle
+  -0.125, -0.375, 0.125, 0.375, -0.125, 0.375,
+];
+
+const vertices = new Float32Array([...multiplySign, ...addSign]);
 
 const buffer = webgl.createBuffer();
 webgl.bindBuffer(webgl.ARRAY_BUFFER, buffer);
