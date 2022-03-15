@@ -20,6 +20,7 @@ const vertexShader = webgl.createShader(webgl.VERTEX_SHADER);
 webgl.shaderSource(
   vertexShader,
   `attribute vec2 pos;
+  attribute vec2 pos2;
   attribute vec4 colours;
   varying vec4 vcolours;
   uniform float xshift;
@@ -57,7 +58,6 @@ webgl.vertexAttribPointer(positionLocation, 2, webgl.FLOAT, false, 0, 0);
 
 const colourBuffer = webgl.createBuffer();
 webgl.bindBuffer(webgl.ARRAY_BUFFER, colourBuffer);
-
 webgl.bufferData(webgl.ARRAY_BUFFER, colours, webgl.STATIC_DRAW);
 
 const coloursLocation = webgl.getAttribLocation(program, "colours");
@@ -71,4 +71,4 @@ const incr = 0.025;
 let xs = -1.5;
 let ys = 0;
 
-draw()
+draw();
