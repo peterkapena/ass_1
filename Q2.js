@@ -1,5 +1,5 @@
 const canvas = document.querySelector("canvas");
- 
+
 const webgl = canvas.getContext("webgl");
 
 if (!webgl) {
@@ -10,26 +10,7 @@ webgl.clearColor(0, 0, 0, 0.25);
 
 webgl.clear(webgl.COLOR_BUFFER_BIT);
 
-const r = 0.5;
-
-const triangles = [
-  0.0,
-  0.0,
-  r,
-  0.0,
-  r * Math.cos(Math.PI / 4),
-  r * Math.sin(Math.PI / 4),
-
-  ...getTriangle(2),
-  ...getTriangle(3),
-  ...getTriangle(4),
-  ...getTriangle(5),
-  ...getTriangle(6),
-  ...getTriangle(7),
-  ...getTriangle(8),
-];
-
-const vertices = new Float32Array(triangles);
+const vertices = triangles;
 
 const buffer = webgl.createBuffer();
 webgl.bindBuffer(webgl.ARRAY_BUFFER, buffer);
@@ -41,11 +22,11 @@ webgl.shaderSource(
   `attribute vec2 pos;
   attribute vec4 colours;
   varying vec4 vcolours;
-  uniform float xshift;
-  uniform float yshift;
+  uniform float xshift1;
+  uniform float yshift1;
 
     void main(){
-        gl_Position = vec4(pos, 0, 3) + vec4(xshift, yshift, 0, 0);
+        gl_Position = vec4(pos, 0, 2) + vec4(xshift1, yshift1, 0, 0);
         vcolours = colours;
     }
 `
@@ -76,57 +57,18 @@ webgl.vertexAttribPointer(positionLocation, 2, webgl.FLOAT, false, 0, 0);
 
 const colourBuffer = webgl.createBuffer();
 webgl.bindBuffer(webgl.ARRAY_BUFFER, colourBuffer);
-const twoColours = [
-  //first triangle
-  ...yellow,
-  ...yellow,
-  ...yellow,
 
-  //second triangle
-  ...orange,
-  ...orange,
-  ...orange,
-
-  //third triangle
-  ...red,
-  ...red,
-  ...red,
-
-  //2nd triangle
-  ...magenta,
-  ...magenta,
-  ...magenta,
-
-  //3rd triangle
-  ...violet,
-  ...violet,
-  ...violet,
-  
-  //4th triangle
-  ...blue,
-  ...blue,
-  ...blue,
-  
-  //5th triangle
-  ...cyan,
-  ...cyan,
-  ...cyan,
-  
-  //6th triangle
-  ...green,
-  ...green,
-  ...green,
-];
-
-webgl.bufferData(
-  webgl.ARRAY_BUFFER,
-  new Float32Array(twoColours),
-  webgl.STATIC_DRAW
-);
+webgl.bufferData(webgl.ARRAY_BUFFER, colours, webgl.STATIC_DRAW);
 
 const coloursLocation = webgl.getAttribLocation(program, "colours");
 webgl.enableVertexAttribArray(coloursLocation);
 webgl.vertexAttribPointer(coloursLocation, 4, webgl.FLOAT, false, 0, 0);
 
 webgl.useProgram(program);
-webgl.drawArrays(webgl.TRIANGLES, 0, vertices.length / 2);
+
+const incr = 0.025;
+
+let xs1 = -1.5;
+let ys1 = 0;
+
+draw()
