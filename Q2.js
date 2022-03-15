@@ -22,11 +22,11 @@ webgl.shaderSource(
   `attribute vec2 pos;
   attribute vec4 colours;
   varying vec4 vcolours;
-  uniform float xshift1;
-  uniform float yshift1;
+  uniform float xshift;
+  uniform float yshift;
 
     void main(){
-        gl_Position = vec4(pos, 0, 2) + vec4(xshift1, yshift1, 0, 0);
+        gl_Position = vec4(pos, 0, 2) + vec4(xshift, yshift, 0, 0);
         vcolours = colours;
     }
 `
@@ -68,7 +68,7 @@ webgl.useProgram(program);
 
 const incr = 0.025;
 
-let xs1 = -1.5;
-let ys1 = 0;
+let xs = -1.5;
+let ys = 0;
 
 draw()

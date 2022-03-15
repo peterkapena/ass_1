@@ -1,19 +1,19 @@
 let bDecr = false;
 
 function draw() {
-  if (bDecr) xs1 -= incr;
-  else xs1 += incr;
+  if (bDecr) xs -= incr;
+  else xs += incr;
 
   webgl.clear(webgl.COLOR_BUFFER_BIT);
-  webgl.uniform1f(webgl.getUniformLocation(program, "xshift1"), xs1);
-  webgl.uniform1f(webgl.getUniformLocation(program, "yshift1"), ys1);
+  webgl.uniform1f(webgl.getUniformLocation(program, "xshift"), xs);
+  webgl.uniform1f(webgl.getUniformLocation(program, "yshift"), ys);
   webgl.drawArrays(webgl.TRIANGLES, 0, vertices.length / 2);
 
   //if we reach the right side, we decrement
-  if (xs1 > 1.5) bDecr = true;
+  if (xs > 1.5) bDecr = true;
   //if we reach the left side we icrement
-  if (xs1 < -1.5) bDecr = false;
-
+  if (xs < -1.5) bDecr = false;
+  
   window.requestAnimationFrame(draw);
 }
 
