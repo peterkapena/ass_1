@@ -13,7 +13,6 @@ function draw() {
   if (xs > 1.5) bDecr = true;
   //if we reach the left side we icrement
   if (xs < -1.5) bDecr = false;
-  
   window.requestAnimationFrame(draw);
 }
 
@@ -99,3 +98,33 @@ const colours = new Float32Array([
   ...green,
   ...green,
 ]);
+
+
+
+  
+//   document.onkeydown = (event) => {
+//   let redraw = true;
+//   switch (event.key) {
+//     case "ArrowDown":
+//       if (ys > -1.5) ys -= incr;
+//       break;
+
+//     case "ArrowUp":
+//       if (ys < 1.5) ys += incr;
+//       break;
+
+//     case "ArrowLeft":
+//       //if we reach the left side
+//       if (xs > -1.5) xs -= incr;
+//       break;
+
+//     case "ArrowRight":
+//       //if we reach the right side
+//       if (xs < 1.5) xs += incr;
+//       break;
+//     default:
+//       redraw = false;
+//       break;
+//   }
+//   if (redraw) q2_draw();
+// };
