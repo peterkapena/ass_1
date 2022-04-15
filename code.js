@@ -9,13 +9,27 @@ function draw() {
   webgl.clear(webgl.COLOR_BUFFER_BIT);
   webgl.uniform1f(webgl.getUniformLocation(program, "xshift"), xs);
   webgl.uniform1f(webgl.getUniformLocation(program, "yshift"), ys);
+  webgl.uniform1f(webgl.getUniformLocation(program, "scale"), scale);
   webgl.drawArrays(webgl.TRIANGLES, 0, vertices.length / 2);
+
+  webgl.uniform1f(webgl.getUniformLocation(program, "xshift"), 1);
+  webgl.drawArrays(
+    webgl.TRIANGLES,
+    0,
+    vertices.slice(0, vertices.length - 1).length / 2
+  );
 
   //if we reach the right side, we decrement
   if (xs > 1.5) bDecr = true;
   //if we reach the left side we icrement
   if (xs < -1.5) bDecr = false;
   window.requestAnimationFrame(draw);
+}
+
+function setBuffer(data) {
+  const buffer = webgl.createBuffer();
+  webgl.bindBuffer(webgl.ARRAY_BUFFER, buffer);
+  webgl.bufferData(webgl.ARRAY_BUFFER, data, webgl.STATIC_DRAW);
 }
 
 function getTriangle(n) {
@@ -100,3 +114,17 @@ const colours = new Float32Array([
   ...green,
   ...green,
 ]);
+
+function multiply4x4Matrices(A, B) {
+  const result = [];
+  for (let k = 0; k <= 12; k += 4) {
+    for (let i = 0; i < 4; i++) {
+      for (let j = 0, bCount = 0; j < 4; j++, bCount += 4) {
+        if (result[k + i])
+          result[k + i] += A[k + (j % 4)] * B[bCount + (i % 4)];
+        else result[k + i] = A[k + (j % 4)] * B[bCount + (i % 4)];
+      }
+    }
+  }
+  return result;
+}
